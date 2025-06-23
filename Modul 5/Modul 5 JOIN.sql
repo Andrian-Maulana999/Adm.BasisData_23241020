@@ -76,6 +76,48 @@ group by tp.kode_pelanggan, mpd.kategori_produk
 having sum(tp.qty) > 4
 order by sum(tp.qty) desc;
 
-
+-- Latihan Mandiri
+-- no 1
+SELECT 
+mp.nama_pelanggan,
+tp.nama_produk,
+mpd.kategori_produk,
+tp.qty
+FROM tr_penjualan_dqlab AS tp
+INNER JOIN ms_pelanggan_dqlab AS mp 
+ON tp.kode_pelanggan = mp.kode_pelanggan
+INNER JOIN ms_produk_dqlab AS mpd 
+ON tp.kode_produk = mpd.kode_produk;
+-- no 2
+SELECT 
+mp.kode_pelanggan,
+mp.nama_pelanggan,
+tp.nama_produk,
+mpd.kategori_produk,
+tp.qty
+FROM ms_pelanggan_dqlab AS mp
+LEFT JOIN tr_penjualan_dqlab AS tp
+ON mp.kode_pelanggan = tp.kode_pelanggan
+LEFT JOIN ms_produk_dqlab AS mpd
+ON tp.kode_produk = mpd.kode_produk
+WHERE tp.qty IS NOT NULL;
+-- no 3
+SELECT 
+mpd.kategori_produk,
+SUM(tp.qty) AS total_qty
+FROM ms_pelanggan_dqlab AS mp
+INNER JOIN tr_penjualan_dqlab AS tp
+ON mp.kode_pelanggan = tp.kode_pelanggan
+INNER JOIN ms_produk_dqlab AS mpd
+ON tp.kode_produk = mpd.kode_produk
+GROUP BY mpd.kategori_produk;
+-- no 4
+SELECT 
+p1.kode_produk,
+p1.nama_produk AS nama_asli,  -- p1 dan p2 ibarat salinan nama_produk pada tabel ms_produk_dqlab
+p2.nama_produk AS nama_duplikat
+FROM ms_produk_dqlab AS p1
+JOIN ms_produk_dqlab AS p2
+ON p1.kode_produk = p2.kode_produk;
 
 
